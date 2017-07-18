@@ -1,0 +1,158 @@
+<header class="navbar">
+    <div class="container-fluid">
+        <button class="navbar-toggler hidden-lg-up" type="button" mobile-nav-toggle>&#9776;</button>
+        <a class="navbar-brand" href="#"></a>
+        <ul class="nav navbar-nav hidden-md-down">
+            <li class="nav-item">
+                <a class="nav-link navbar-toggler sidebar-toggle" href="#">&#9776;</a>
+            </li>
+        </ul>
+        <div class="hidden-md-down pull-right">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/aboutus']">About Us &nbsp;&nbsp;&nbsp;</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/contactus']">Contact Us &nbsp;&nbsp;&nbsp;</a>
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/location']">Location &nbsp;&nbsp;&nbsp;</a>
+        </div>
+    </div>
+</header>
+
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']">Welcome</a>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle">Applications</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/alumcast']">Aluminum Casting</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/boilers']">Boilers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/cementkilns']">Cement Kilns</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/fiberovens']">Fiberglass Ovens</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/glassfurnaces']">Glass Furunaces</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/incinerators']">Incinerators</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/paintbooths']">Paint Booths</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/pharma']">Pharmaceuticals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/rubplast']">Rubber & Plastics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/semiconductors']">Semiconductors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/steelscarf']">Steel Scarfing</a>
+                    </li>                   
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle">Products</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/esp']">Dry Electrostatic Precipitators</a>
+                    </li>                
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/wesp']">Wet Electrostatic Precipitators</a>
+                    </li>                    
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/rto']">Regenerative Thermal Oxidizers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/auxequip']">Auxiliry Equipment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/ff']">Fabric Filters/Baghouse Systems</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/denox']">DeNOx SCR Reactors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/acidgas']">Acid Gas Control Systems</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/mobiletest']">Mobile Testing</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle">Services</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/construction']">Installation Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/pands']">Complete Service Program</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle">Tools</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/tools']">Tech Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/references']">References</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/customers']">Customers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/mact']">MACT Solutions</a>
+            </li>           
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/productlit']">Product Literature</a>
+            </li>           
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/aboutus']">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/contactus']">Contact Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/location']">Location</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Main content -->
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <breadcrumbs></breadcrumbs>
+    </ol>
+
+    <div class="container-fluid">
+        <router-outlet></router-outlet>
+    </div>
+    <!-- /.conainer-fluid -->
+</main>
+
+<footer class="footer">
+    <span>
+        <p class="text-xs-center">
+            &copy; {{year}} <a href="http://mcgillairclean.com">McGill AirClean <small>LLC</small></a> — Family owned and operated since 1951
+        </p>
+    </span>
+    <span class="float-xs-right">
+        
+    </span>
+</footer>

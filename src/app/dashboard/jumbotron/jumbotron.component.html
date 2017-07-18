@@ -1,0 +1,17 @@
+<div class=" animated fadeIn row">
+  <div class="col-md-12 hidden-xs-down">
+    <carousel [interval]="myInterval" [noWrap]="noWrapSlides">
+      <slide *ngFor="let slidez of slides; let index=index"
+             [active]="slidez.active">
+
+        <div class="text-xs-center"><img [src]="slidez.image"></div>
+
+        <div class="carousel-caption">
+          <!--<h4>Slide {{index}}</h4>-->
+          <p>{{slidez.text}}</p>
+        </div>
+      </slide>
+    </carousel>
+  </div>
+
+</div>

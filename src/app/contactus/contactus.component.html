@@ -1,0 +1,61 @@
+<div class="animated fadeIn">
+  <div class="card card-block card-outline-primary ">
+    <h4 class="card-title card-accent-primary">Contact Us</h4>
+    <form *ngIf="active" name="contactusform" (ngSubmit)="onSend()" #contactUsForm="ngForm" >
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="name-input">Name</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" id="name-input" [(ngModel)]="contact.name" name="name" required #name="ngModel">
+          <div [hidden]="name.valid || name.pristine" 
+             class="alert alert-danger">
+             Name is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="company-input">Company</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" id="company-input" [(ngModel)]="contact.company" name="company">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="email-input">Email</label>
+        <div class="col-xs-10">
+          <input type="email" class="form-control" id="email-input" [(ngModel)]="contact.email" name="email" required #email="ngModel">
+          <div [hidden]="email.valid || email.pristine" 
+             class="alert alert-danger">
+             Email is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="phone-input">Phone</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" id="phone-input" [(ngModel)]="contact.phone" name="phone">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="message-input">Message</label>
+        <div class="col-xs-10">
+          <textarea class="form-control" id="message-input" [(ngModel)]="contact.theMessage" name="theMessage" rows="5" required #message="ngModel"></textarea>
+          <div [hidden]="message.valid || message.pristine" 
+             class="alert alert-danger">
+             Message is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+          <button class="btn btn-success" [disabled]="!contactUsForm.form.valid" >Send</button>   
+        </div>
+      </div>
+    </form>
+    <!--<div>
+      <span>Values:</span>
+      <span>{{errorMessage}}</span>
+      <ul>
+        <li *ngFor="let value of values">{{value}}</li>
+      </ul>
+    </div>-->
+  </div>
+</div>
