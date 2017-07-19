@@ -9,6 +9,7 @@ import { ToolsService }             from './tools.service';
 
 import { GreaterThanZeroValidator } from '../shared/greaterthanzero.validator';
 import { NonZeroValidator }         from '../shared/nonzero.validator';
+import { PercentValidator }         from '../shared/percent.validator';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { NonZeroValidator }         from '../shared/nonzero.validator';
     declarations: [ 
         ToolsComponent,
         GreaterThanZeroValidator,
-        NonZeroValidator
+        NonZeroValidator,
+        PercentValidator
     ],
     providers:[ToolsService]
 })

@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '',
         component: PandSComponent,
         data: {
-            title: 'Uni-Quick™ Movable Duct System'
+            title: 'Parts and Service - Preventive Maintenance'
         }
     }
 ];
