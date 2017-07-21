@@ -351,3 +351,32 @@ p.mcgill-gold{
     color: black;
 }
 
+table.molecular {
+    color:black;
+    margin:1px;
+}
+
+thead.molecular {
+    background-color: #1171a3;
+    color: white;
+    text-align: center;
+}
+
+tbody.molecular {
+    background-color: white;
+}
+
+td.molecular {
+  border:1px solid black;
+}
+
+th.molecular {
+  border:1px solid black;
+  background-color:#589CBF;
+  text-align: center;
+}
+
+input.molecular {
+  float:left;
+  width:80px;
+}

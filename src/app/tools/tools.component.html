@@ -18,13 +18,13 @@
           <div class="form-group row">
             <label class="col-xs-4 col-form-label">Gas Flow (scfmd) 70°F, 14.696 psia</label>
             <div class="col-xs-3">
-              <input type="number" class="form-control" [(ngModel)]="blower.gasFlow" name="gasFlow" #value="ngModel" (click)="$event.target.select()"/>
+              <input type="number" step="any" class="form-control" [(ngModel)]="blower.gasFlow" name="gasFlow" #value="ngModel" (click)="$event.target.select()"/>
             </div>
           </div>
           <div class="form-group row">
             <label class="col-xs-4 col-form-label">% H2O (by volume)</label>
             <div class="col-xs-3">
-              <input type="number" class="form-control" [(ngModel)]="blower.percentH2O" name="percentH2O" #value="ngModel" percent (click)="$event.target.select()"/>
+              <input type="number" step="any" class="form-control" [(ngModel)]="blower.percentH2O" name="percentH2O" #value="ngModel" percent (click)="$event.target.select()"/>
               <div class="alert alert-danger" *ngIf="value.errors && (value.dirty || value.touched )">
                 <p *ngIf="value.errors.percent">
                     Value must be a valid %
@@ -35,25 +35,25 @@
           <div class="form-group row">
             <label class="col-xs-4 col-form-label">Operating Temperature (°F)</label>
             <div class="col-xs-3">
-              <input type="number" class="form-control" [(ngModel)]="blower.operatingTemperature" name="operatingTemperature" #value="ngModel" (click)="$event.target.select()"/>
+              <input type="number" step="any" class="form-control" [(ngModel)]="blower.operatingTemperature" name="operatingTemperature" #value="ngModel" (click)="$event.target.select()"/>
             </div>
           </div>
           <div class="form-group row">
             <label class="col-xs-4 col-form-label">Fan Static Pressure (in wg)</label>
             <div class="col-xs-3">
-              <input type="number" class="form-control" [(ngModel)]="blower.fanStaticPressure" name="fanStaticPressure" #value="ngModel" (click)="$event.target.select()"/>
+              <input type="number" step="any" class="form-control" [(ngModel)]="blower.fanStaticPressure" name="fanStaticPressure" #value="ngModel" (click)="$event.target.select()"/>
             </div>
           </div>
           <div class="form-group row">
             <label class="col-xs-4 col-form-label">Fan Inlet Pressure (psia)</label>
             <div class="col-xs-3">
-              <input type="number" class="form-control" [(ngModel)]="blower.fanInletPressure" name="fanInletPressure" #value="ngModel" (click)="$event.target.select()"/>
+              <input type="number" step="any" class="form-control" [(ngModel)]="blower.fanInletPressure" name="fanInletPressure" #value="ngModel" (click)="$event.target.select()"/>
             </div>
           </div>
           <div class="form-group row">
             <label class="col-xs-4 col-form-label">Fan Efficiency</label>
             <div class="col-xs-3">
-              <input type="number" class="form-control" [(ngModel)]="blower.fanEfficiency" name="fanEfficiency" #value="ngModel" percent (click)="$event.target.select()"/>
+              <input type="number" step="any" class="form-control" [(ngModel)]="blower.fanEfficiency" name="fanEfficiency" #value="ngModel" percent (click)="$event.target.select()"/>
               <div class="alert alert-danger" *ngIf="value.errors && (value.dirty || value.touched )">
                 <p *ngIf="value.errors.percent">
                     Value must be a valid %
@@ -64,7 +64,7 @@
           <div class="form-group row">
             <label class="col-xs-4 col-form-label">Flow Safety Factor</label>
             <div class="col-xs-3">
-              <input type="number" class="form-control" [(ngModel)]="blower.flowSafetyFactor" name="flowSafetyFactor" #value="ngModel" percent (click)="$event.target.select()"/>
+              <input type="number" step="any" class="form-control" [(ngModel)]="blower.flowSafetyFactor" name="flowSafetyFactor" #value="ngModel" percent (click)="$event.target.select()"/>
               <div class="alert alert-danger" *ngIf="value.errors && (value.dirty || value.touched )">
                 <p *ngIf="value.errors.percent">
                     Value must be a valid %
@@ -75,7 +75,7 @@
           <div class="form-group row">
             <label class="col-xs-4 col-form-label">Static Pressure Safety Factor</label>
             <div class="col-xs-3">
-              <input type="number" class="form-control" [(ngModel)]="blower.staticPressureSafetyFactor" name="staticPressureSafetyFactor" #value="ngModel" percent (click)="$event.target.select()"/>
+              <input type="number" step="any" class="form-control" [(ngModel)]="blower.staticPressureSafetyFactor" name="staticPressureSafetyFactor" #value="ngModel" percent (click)="$event.target.select()"/>
               <div class="alert alert-danger" *ngIf="value.errors && (value.dirty || value.touched )">
                 <p *ngIf="value.errors.percent">
                     Value must be a valid %
@@ -106,13 +106,14 @@
     <tab heading="Air & Water Vapor Calculators">
       <div class="card card-block card-outline-primary ">
         <tabset>
+
           <!--Convert Relative Humidity to % Volue H2O-->
-          <tab heading="Convert Relative Humidity to % Volume (H2O)">
+          <tab heading="Humidity & %Volume (H2O)">
             <form novalidate #g="ngForm">
               <div class="form-group row">
                 <label class="col-xs-4 col-form-label">Relative Humidity</label>
                 <div class="col-xs-3">
-                  <input type="number" class="form-control" [(ngModel)]="relHum.relativeHumidity" name="relativeHumidity" #value="ngModel" percent (click)="$event.target.select()" (ngModelChange)="calcRelativeHumidity()"/>
+                  <input type="number" step="any" class="form-control" [(ngModel)]="relHum.relativeHumidity" name="relativeHumidity" #value="ngModel" percent (click)="$event.target.select()" (ngModelChange)="calcRelativeHumidity()"/>
                   <div class="alert alert-danger" *ngIf="value.errors && (value.dirty || value.touched )">
                     <p *ngIf="value.errors.percent">
                         Value must be a valid %
@@ -123,7 +124,7 @@
               <div class="form-group row">
                 <label class="col-xs-4 col-form-label">Temperature (°F)</label>
                 <div class="col-xs-3">
-                  <input type="number" class="form-control" [(ngModel)]="relHum.temperature" name="temperature" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="calcRelativeHumidity()"/>
+                  <input type="number" step="any" class="form-control" [(ngModel)]="relHum.temperature" name="temperature" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="calcRelativeHumidity()"/>
                 </div>
               </div>
               <div class="form-group row">
@@ -136,9 +137,10 @@
               </div>          
             </form>
           </tab>
+         
           <!--Convert between % Weight and Volume (H2O) -->
-          <tab heading="Convert between % Weight and Volume (H2O)">
-            <form novalidate #h="ngForm">
+          <tab heading="%Weight & Volume (H2O)">
+            <form novalidate #i="ngForm">
               <div class="form-group row">
                 <label class="col-xs-4 col-form-label" >Calculation Type</label>
                 <div class="col-xs-2" *ngFor="let typeH2O of H2OInputTypes">
@@ -148,7 +150,7 @@
               <div class="form-group row">
                 <label class="col-xs-4 col-form-label">% (H<sub>2</sub>O):</label>
                 <div class="col-xs-3">
-                  <input type="number" class="form-control" [(ngModel)]="wtVol.percentH2OIn" name="percentH2OIn" #value="ngModel" percent (click)="$event.target.select()" (ngModelChange)="calcPercentH2O()"/>
+                  <input type="number" step="any" class="form-control" [(ngModel)]="wtVol.percentH2OIn" name="percentH2OIn" #value="ngModel" percent (click)="$event.target.select()" (ngModelChange)="calcPercentH2O()"/>
                   <div class="alert alert-danger" *ngIf="value.errors && (value.dirty || value.touched )">
                     <p *ngIf="value.errors.percent">
                         Value must be a valid %
@@ -159,7 +161,7 @@
               <div class="form-group row">
                 <label class="col-xs-4 col-form-label">Dry Gas Molecular Weight (Lb/Lb-Mole)</label>
                 <div class="col-xs-3">
-                  <input type="number" class="form-control" [(ngModel)]="wtVol.dryGasMolecularWeight" name="dryGasMolecularWeight" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="calcPercentH2O()"/>
+                  <input type="number" step="any" class="form-control" [(ngModel)]="wtVol.dryGasMolecularWeight" name="dryGasMolecularWeight" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="calcPercentH2O()"/>
                 </div>
               </div>
               <div class="form-group row">
@@ -172,7 +174,183 @@
               </div>          
             </form>
           </tab>
-          
+
+          <!--Convert between ACFM, SCFMd, and lb/hr -->
+          <tab heading="ACFM, SCFMd, & lb/hr">
+            <form novalidate #h="ngForm" (ngSubmit)="convertFlowRates()">
+              <div class="form-group row">
+                <label class="col-xs-4 col-form-label" >Gas Flow Rate</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="flowRate.gasFlowRate" name="gasFlowRate" #value="ngModel" (click)="$event.target.select()"/>
+                </div>
+                <div class="col-xs-2" *ngFor="let flowType of flowRateTypes">
+                    <input type="radio" id="flowType-input" [(ngModel)]="flowRate.flowInputUOM" name="flowType" [value]="flowType.value" (ngModelChange)="convertFlowRates()">{{flowType.display}}
+                </div>
+              </div>
+              <div *ngIf="flowRate.flowInputUOM!='lb/hr'" class="form-group row">
+                <label class="col-xs-4 col-form-label">% Volume (H<sub>2</sub>O):</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="flowRate.flowPercentH2OIn" name="flowPercentH2OIn" #value="ngModel" percent (click)="$event.target.select()"/>
+                  <div class="alert alert-danger" *ngIf="value.errors && (value.dirty || value.touched )">
+                    <p *ngIf="value.errors.percent">
+                        Value must be a valid %
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="flowRate.flowInputUOM!='lb/hr'" class="form-group row">
+                <label class="col-xs-4 col-form-label">Gas Temperature (°F)</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="flowRate.gasTemperature" name="gasTemperature" #value="ngModel" (click)="$event.target.select()"/>
+                </div>
+              </div>
+              <div *ngIf="flowRate.flowInputUOM!='lb/hr'" class="form-group row">
+                <label class="col-xs-4 col-form-label">Gas Pressure (psia)</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="flowRate.gasPressure" name="gasPressure" #value="ngModel" (click)="$event.target.select()"/>
+                </div>
+              </div>
+              <div *ngIf="flowRate.flowInputUOM=='lb/hr'" class="form-group row">
+                <label class="col-xs-4 col-form-label">Water Mass Rate (lb/hr)</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="flowRate.waterMassRate" name="waterMassRate" #value="ngModel" (click)="$event.target.select()"/>
+                </div>
+              </div>
+              <div *ngIf="flowRate.flowInputUOM=='lb/hr'" class="form-group row">
+                <label class="col-xs-4 col-form-label">Dry Gas Molecular Weight (lb/lbmol)</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="flowRate.dryGasMolecularWeight" name="dryGasMolecularWeight" #value="ngModel" (click)="$event.target.select()"/>
+                </div>
+              </div>
+              <div class="form-group row">
+                <button [disabled]="h.invalid" type="submit" class="btn-space btn btn-success">Calculate</button> 
+              </div>            
+              <div class="form-group row">
+                <label class="col-xs-4 col-form-label">Results: &nbsp;&nbsp;
+                </label>
+                <div class="col-xs-8">
+                  <div>Gas Flow Rate: &nbsp; {{flowRate.gasFlowRateResult}} {{flowRate.gasFlowRateResultUOM}}</div>
+                  <div *ngIf="flowRate.flowInputUOM=='lb/hr'">Initial Water Vapor: &nbsp; {{flowRate.initialWaterVapor}} SCFM (at 70&deg;F, 14.696 psia)</div>
+                  <div *ngIf="flowRate.flowInputUOM=='lb/hr'">% Volume H<sub>2</sub>O: &nbsp; {{flowRate.percentVolumeH2O}} %</div>
+                </div>
+              </div>          
+            </form>
+          </tab>
+
+          <!--Calculate Pollutant Concentration -->
+          <tab heading="Pollutant Concentration">
+            <form novalidate #j="ngForm" (ngSubmit)="calculatePollutantConcentration()">
+              <div class="form-group row">
+                <label class="col-xs-4 col-form-label" >Volume Flow (scfmd at 70&deg;F, 14.696 psia)</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="pollute.volumeFlow" name="volumeFlow" #value="ngModel" (click)="$event.target.select()"/>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-4 col-form-label" >Pollutant Mass Flow (lb/hr)</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="pollute.pollutantMassFlow" name="pollutantMassFlow" #value="ngModel" (click)="$event.target.select()"/>
+                </div>
+              </div>
+              <div *ngIf="pollute.pollutantConcentrationUOM=='ppmdv'" class="form-group row">
+                <label class="col-xs-4 col-form-label">Pollutant Molecular Rate (lb/lbmol)</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="pollute.pollutantMolecularRate" name="pollutantMolecularRate" #value="ngModel" (click)="$event.target.select()"/>
+                </div>
+              </div>
+              <div class="form-group row">
+                <button [disabled]="j.invalid" type="submit" class="btn-space btn btn-success">Calculate</button> 
+              </div>            
+              <div class="form-group row">
+                <label class="col-xs-4 col-form-label">Results: &nbsp;&nbsp; (Select UOM)
+                </label>
+                <div class="col-xs-8">
+                  <div class="col-x-4">Pollutant Concentration: &nbsp; {{pollute.pollutantConcentration}} {{pollute.pollutantConcentrationUOM}}
+                    <div class="col-xs-2" *ngFor="let polluteType of polluteTypes">
+                        <input type="radio" id="polluteType-input" [(ngModel)]="pollute.pollutantConcentrationUOM" name="polluteType" [value]="polluteType.value" (ngModelChange)="calculatePollutantConcentration()">{{polluteType.display}}
+                    </div>
+                  </div>
+                </div>
+              </div>          
+            </form>
+          </tab>
+
+          <!--Calculate Atmospheric Pressure from Site Elevation -->
+          <tab heading="Atmospheric Pressure">
+            <form novalidate #k="ngForm">
+              <div class="form-group row">
+                <label class="col-xs-4 col-form-label" >Site Elevation (ft)</label>
+                <div class="col-xs-3">
+                  <input type="number" step="any" class="form-control" [(ngModel)]="pressure.elevation" name="elevation" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="calcPressureAtElevation()"/>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xs-4 col-form-label">Results: &nbsp;&nbsp;
+                </label>
+                <div class="col-xs-8">
+                  <span>Atmospheric Pressure: &nbsp; {{pressure.elevationPressureInHg}} in Hg</span><br />
+                  <span>Atmospheric Pressure: &nbsp; {{pressure.elevationPressurePSIA}} psia</span>
+                </div>
+              </div>          
+            </form>
+          </tab>
+
+          <!--Apparent Molecular Weights -->
+          <tab heading="Molecular Weights">
+            <div class="col-xs-12">
+              <table class="molecular">
+                  <thead class="molecular">
+                      <tr class="molecular">
+                          <th class="molecular">Gas Constituents</th>
+                          <th class="molecular">Molecular Weight</th>
+                          <th class="molecular">Percent Volume</th>
+                          <th class="molecular">Percent Mass</th>
+                      </tr>
+                  </thead>
+                  <tbody class="molecular">
+                      <tr *ngFor="let out of molWt.molWtInputs" class="molecular">
+                          <td class="molecular">{{out.name}}</td>
+                          <td *ngIf="out.name !== 'Other'" class="molecular">{{out.mw}}</td>
+                          <td *ngIf="out.name === 'Other'" class="molecular">
+                              <input class="molecular form-control" type="number" step="any" [(ngModel)]="out.mw" (ngModelChange)="updateMolecularWeights(1)">%
+                          </td>
+                          <td class="molecular">
+                              <input class="molecular form-control" type="number" step="any" [(ngModel)]="out.percentVolume" (ngModelChange)="updateMolecularWeights(1)">%
+                          </td>
+                          <td class="molecular">
+                              <input class="molecular form-control" type="number" step="any" [(ngModel)]="out.percentMass" (ngModelChange)="updateMolecularWeights(2)">%
+                          </td>
+                      </tr>
+                      <tr class="molecular">
+                          <td class="molecular" colspan="2">Total</td>
+                          <td class="molecular">
+                              <input class="molecular form-control" type="number"[(ngModel)]="molWt.totalVolumePercent" readonly />%
+                          </td>
+                          <td class="molecular">
+                              <input class="molecular form-control" type="number"[(ngModel)]="molWt.totalMassPercent" readonly />%
+                          </td>
+                      </tr>
+                      <tr class="molecular">
+                          <td class="molecular" colspan="3">Apparent Molecular Weight</td>
+                          <td class="molecular">
+                              <input class="molecular form-control" type="number"[(ngModel)]="molWt.apparentMolecularWeight" readonly />
+                          </td>
+                      </tr>
+                      <tr class="molecular">
+                          <td class="molecular" colspan="3">Dry Gas Apparent Molecular Weight</td>
+                          <td>
+                              <input class="molecular form-control" type="number"[(ngModel)]="molWt.dryGasApparentMolecularWeight" readonly />
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+            <div class="col-xs-12">
+              <button type="button" class="btn-space btn btn-info" (click)="clear()">Clear</button> 
+            </div>            
+            
+          </tab>
+
         </tabset>
       </div>
     </tab>
