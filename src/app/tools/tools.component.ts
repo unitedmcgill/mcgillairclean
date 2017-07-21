@@ -8,6 +8,10 @@ import { IPollute } from '../models/volume';
 import { IPressure } from '../models/volume';
 import { IMoleWt } from '../models/volume';
 import { MoleWt } from '../models/volume';
+import { IDuctSizing } from '../models/duct-sizing';
+import { IGenConv } from '../models/general-conv';
+import { dimOpt, resultItem } from '../models/general-conv';
+import { IApConv, measureOpt, apResultItem } from '../models/ap-conv';
 
 @Component({
   //selector: 'app-tools',
@@ -27,6 +31,11 @@ export class ToolsComponent implements OnInit {
     { value: 'SCFMd', display: 'SCFMd'},
     { value: 'ACFM', display: 'ACFM'},
     { value: 'lb/hr', display: 'lb/hr'}
+  ];
+
+  public ductFlowRateTypes = [
+    { value: 'SCFMd', display: 'SCFMd'},
+    { value: 'ACFM', display: 'ACFM'}
   ];
 
   public polluteTypes = [
@@ -102,7 +111,86 @@ export class ToolsComponent implements OnInit {
     apparentMolecularWeight : 0, // out
     dryGasApparentMolecularWeight : 0  // out    
   }
+  public ductSizing : IDuctSizing = {
+    gasFlow : 0,
+    flowUOM : this.ductFlowRateTypes[0].value,
+    gasTemperature : 0, // if SCFMd 
+    percentH2O : 0, // if SCFMd
+    gasVelocity : 0, 
+    gasPressure : 0, // if SCFMd
+    ductDiameterIn : 0, // out
+    ductDiameterFt : 0, // out
+    ductCrossSectionalAreaSqIn : 0, // out
+    ductCrossSectionalAreaSqFt : 0, // out
+    gasFlowActual : 0 // out if SCFMd  
+  };
 
+  public dimOptions : dimOpt[] = [{label : 'Linear', dim: 1}, {label: 'Area', dim: 2}, {label: 'Volume', dim: 3}];
+  public results : resultItem[] = [
+      {key: 'in', uom: 'Inches', dim: 1, value: 0},
+      {key: 'ft', uom: 'Feet', dim: 1, value: 0},
+      {key: 'yd', uom: 'Yards', dim: 1, value: 0},
+      {key: 'mi', uom: 'Miles', dim: 1, value: 0},
+      {key: 'mm', uom: 'Millimeters', dim: 1, value: 0},
+      {key: 'cm', uom: 'Centimeters', dim: 1, value: 0},
+      {key: 'm', uom: 'Meters', dim: 1, value: 0},
+      {key: 'km', uom: 'Kilometers', dim: 1, value: 0},
+      {key: 'ac', uom: 'Acres', dim: 2, value: 0},
+      {key: 'l', uom: 'Liters', dim: 3, value: 0},
+      {key: 'qt', uom: 'Quarts', dim: 3, value: 0},
+      {key: 'gal', uom: 'Gallons', dim: 3, value: 0}
+    ];
+
+  public genConv : IGenConv = {
+    dimension : this.dimOptions[0],
+    measurement : 0,
+    uom : this.results[0]
+  }
+
+
+  
+  public measurementOptions : measureOpt[] = [{ label: 'Flow Rate', key: 0 }, { label: 'Temperature', key: 1 }, { label: 'Velocity', key: 2 },
+            { label: 'Pressure', key: 3 }, { label: 'Other', key: 4 }];
+  
+  public apResults : apResultItem[] = 
+           [{ key: 0, label: 'Flow Rate - Actual', uom1: 'ACFM', uom2: 'Am\u00B3/hr', value1: 0, value2: 0 },
+            { key: 0, label: 'Flow Rate - Standard to Normal', uom1: 'SCFM', uom2: 'Nm\u00B3/hr', value1: 0, value2: 0 },
+            { key: 0, label: 'Flow Rate - Dry', uom1: 'SCFMd', uom2: 'Nm\u00B3/hr (d)', value1: 0, value2: 0 },
+            { key: 0, label: 'Flow Rate - Wet', uom1: 'SCFMw', uom2: 'Nm\u00B3/hr (w)', value1: 0, value2: 0 },
+            { key: 0, label: 'Flow Rate', uom1: 'cfm', uom2: 'Am\u00B3/hr', value1: 0, value2: 0 },
+            { key: 0, label: 'Particulate Concentration', uom1: 'gr/dscf', uom2: 'mg/Nm\u00B3', value1: 0, value2: 0 },
+            { key: 1, label: 'Temperature', uom1: '°F', uom2: '°C', value1: 32, value2: 0 },
+            { key: 1, label: 'Temperature', uom1: '°F', uom2: 'K', value1: 32, value2: 273.15 },
+            { key: 1, label: 'Temperature', uom1: '°C', uom2: 'K', value1: 0, value2: 273.15 },
+            { key: 2, label: 'Velocity (per second)', uom1: 'ft/s', uom2: 'm/s', value1: 0, value2: 0 },
+            { key: 2, label: 'Velocity (per minute)', uom1: 'ft/min', uom2: 'm/min', value1: 0, value2: 0 },
+            { key: 2, label: 'Velocity (per hour)', uom1: 'mph', uom2: 'km/hr', value1: 0, value2: 0 },
+            { key: 3, label: 'Pressure', uom1: 'in wg', uom2: 'mm Hg', value1: 0, value2: 0 },
+            { key: 3, label: 'Pressure', uom1: 'in wg', uom2: 'psia', value1: 0, value2: 0 },
+            { key: 3, label: 'Pressure', uom1: 'psi', uom2: 'bars', value1: 0, value2: 0 },
+            { key: 3, label: 'Pressure', uom1: 'lb/ft\u00B2', uom2: 'bars', value1: 0, value2: 0 },
+            { key: 4, label: 'Mass Emission Rate', uom1: 'lb/hr', uom2: 'kg/s', value1: 0, value2: 0 },
+            { key: 4, label: 'Density', uom1: 'lb/ft\u00B3', uom2: 'kg/m\u00B3', value1: 0, value2: 0 },
+            { key: 4, label: 'Process Heat Input', uom1: 'BTU/hr', uom2: 'kW', value1: 0, value2: 0 },
+            { key: 4, label: 'FF Bag Weight', uom1: 'oz/yd\u00B2', uom2: 'kg/m\u00B2', value1: 0, value2: 0 },
+            { key: 4, label: 'FF Bag Permeability', uom1: 'cfm/ft\u00B2', uom2: 'Am\u00B3/hr/m\u00B2', value1: 0, value2: 0 },
+            { key: 4, label: 'Pump Capacity', uom1: 'gpm', uom2: 'm\u00B3/hr', value1: 0, value2: 0 },
+            { key: 4, label: 'Pump Total Dynamic Head', uom1: 'ft tdh', uom2: 'm tdh', value1: 0, value2: 0 },
+            { key: 4, label: 'Thickness', uom1: 'gauge', uom2: 'mm', value1: 3, value2: 0.2391 },
+            { key: 4, label: 'Weight', uom1: 'lb', uom2: 'kg', value1: 0, value2: 0 }
+        ];
+
+  public apCalc : IApConv = {
+    selectedMeasure : this.measurementOptions[0],
+    uom : this.apResults[0],
+    standardTemperature : 70,
+    standardPressure : 14.696,
+    normalTemperature : 0,
+    normalPressure : 101.325,
+    gasPressure : 0,
+    gasTemperature : 0
+  };
+          
   constructor( private toolsService: ToolsService) {
     //this.active = true;
    }
@@ -309,4 +397,426 @@ export class ToolsComponent implements OnInit {
     this.molWt.molWtInputs[this.molWt.molWtInputs.length-1].mw = 0;
   }
 
+  public calculateDuctSize() {
+    if (this.ductSizing.gasFlow <= 0 || this.ductSizing.gasVelocity <= 0) {
+        alert('Measurements must be positive.');
+        return;
+    }
+    if (this.ductSizing.flowUOM === 'ACFM') {
+        this.ductSizing.gasFlowActual = this.ductSizing.gasFlow;
+    }
+    else {
+        this.ductSizing.gasFlowActual = Math.round(100 * this.ductSizing.gasFlow * (460 + this.ductSizing.gasTemperature) * 14.696 / ((1 - this.ductSizing.percentH2O / 100) * 530 * this.ductSizing.gasPressure)) / 100;
+    }
+
+    this.ductSizing.ductCrossSectionalAreaSqFt = Math.round(100 * this.ductSizing.gasFlowActual / this.ductSizing.gasVelocity) / 100;
+    this.ductSizing.ductCrossSectionalAreaSqIn = Math.round(100 * this.ductSizing.ductCrossSectionalAreaSqFt * 144) / 100;
+    this.ductSizing.ductDiameterFt = Math.round(100 * Math.pow(this.ductSizing.ductCrossSectionalAreaSqFt / 3.14 * 4, 0.5)) / 100;
+    this.ductSizing.ductDiameterIn = Math.round(100 * Math.pow(this.ductSizing.ductCrossSectionalAreaSqFt * 144 / 3.14 * 4, 0.5)) / 100;
+  }
+
+  public convertGeneralValues() {
+    if (this.genConv.measurement < 0) {
+        alert('Measurements must be positive.');
+        return;
+    }
+
+    var baseResultInches = this.genConv.measurement;
+    switch (this.genConv.uom.key)
+    {
+        case "ft":
+            baseResultInches *= Math.pow(12, this.genConv.dimension.dim);
+            break;
+        case "yd":
+            baseResultInches *= Math.pow(36, this.genConv.dimension.dim);
+            break;
+        case "mi":
+            baseResultInches *= Math.pow(63360, this.genConv.dimension.dim);
+            break;
+        case "mm":
+            baseResultInches *= Math.pow(0.0393701, this.genConv.dimension.dim);
+            break;
+        case "cm":
+            baseResultInches *= Math.pow(0.393701, this.genConv.dimension.dim);
+            break;
+        case "m":
+            baseResultInches *= Math.pow(39.3701, this.genConv.dimension.dim);
+            break;
+        case "km":
+            baseResultInches *= Math.pow(39370.1, this.genConv.dimension.dim);
+            break;
+            // Area-only unit
+        case "ac":
+            baseResultInches *= 6273000;
+            break;
+            // Volume-only units
+        case "l":
+            baseResultInches *= 61.0237;
+            break;
+        case "qt":
+            baseResultInches *= 57.75;
+            break;
+        case "gal":
+            baseResultInches *= 231;
+            break;
+    }
+
+    for (var i = 0; i < this.results.length; i++) {
+        switch (this.results[i].key)
+        {
+            case "in":
+                this.results[i].value = baseResultInches;
+                break;
+            case "ft":
+                this.results[i].value = baseResultInches / Math.pow(12, this.genConv.dimension.dim);
+                break;
+            case "yd":
+                this.results[i].value = baseResultInches / Math.pow(36, this.genConv.dimension.dim);
+                break;
+            case "mi":
+                this.results[i].value = baseResultInches / Math.pow(63360, this.genConv.dimension.dim);
+                break;
+            case "mm":
+                this.results[i].value = baseResultInches / Math.pow(0.0393701, this.genConv.dimension.dim);
+                break;
+            case "cm":
+                this.results[i].value = baseResultInches / Math.pow(0.393701, this.genConv.dimension.dim);
+                break;
+            case "m":
+                this.results[i].value = baseResultInches / Math.pow(39.3701, this.genConv.dimension.dim);
+                break;
+            case "km":
+                this.results[i].value = baseResultInches / Math.pow(39370.1, this.genConv.dimension.dim);
+                break;
+                // Area-only unit
+            case "ac":
+                if (this.genConv.dimension.dim == 2) {
+                    this.results[i].value = baseResultInches / 6273000;
+                }
+                else {
+                    this.results[i].value = 0;
+                }
+                break;
+                // Volume-only units
+            case "l":
+                if (this.genConv.dimension.dim == 3) {
+                    this.results[i].value = baseResultInches / 61.0237;
+                }
+                else {
+                    this.results[i].value = 0;
+                }
+                break;
+            case "qt":
+                if (this.genConv.dimension.dim == 3) {
+                    this.results[i].value = baseResultInches / 57.75;
+                }
+                else {
+                    this.results[i].value = 0;
+                }
+                break;
+            case "gal":
+                if (this.genConv.dimension.dim == 3) {
+                    this.results[i].value = baseResultInches / 231;
+                }
+                else {
+                    this.results[i].value = 0;
+                }
+                break;
+        }
+    }
+  }
+
+  public updateUOMOptions() {
+    var uomModifier = '';
+    if (this.genConv.dimension.dim === 2) {
+        uomModifier = 'Sq. ';
+    }
+    else if (this.genConv.dimension.dim === 3) {
+        uomModifier = 'Cu. ';
+    }
+
+    for (var i = 0; i < this.results.length; i++) {
+        if (this.results[i].dim === 1) {
+            if (this.results[i].uom.indexOf(' ') >= 0) {
+                this.results[i].uom = this.results[i].uom.split(' ')[1];
+            }
+            this.results[i].uom = uomModifier + this.results[i].uom;
+        }
+    }
+
+    if (this.genConv.uom.dim !== 1 && this.genConv.uom.dim !== this.genConv.dimension.dim) {
+        this.genConv.uom = this.results[0];
+    }
+
+    this.convertGeneralValues();
+    
+  }
+
+  public visibleUnits(output) {
+    return output.dim === 1 || output.dim ===this.genConv.dimension.dim;
+  }
+
+  public convertPollutionValues(changedIndex){
+    for (var i = 0; i < this.apResults.length; i++) {
+        var nInput = this.apResults[i].value1;
+        if (changedIndex === 2) {
+            nInput = this.apResults[i].value2;
+        }
+
+        switch (this.apResults[i].label) {
+            case 'Flow Rate - Actual':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput / 1.699) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 1.699) / 100;
+                }
+                break;
+            case 'Flow Rate':
+            case 'Flow Rate - Dry':
+            case 'Flow Rate - Wet':
+            case 'Flow Rate - Standard to Normal':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput * (460 + this.apCalc.standardPressure) * this.convertkPaToPSI(this.apCalc.normalPressure) /
+                        (1.699 * (460 + this.convertTemperature('°C', '°F', this.apCalc.normalTemperature)) * this.apCalc.standardPressure)) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 1.699 * (460 + this.convertTemperature('°C', '°F', this.apCalc.normalTemperature)) *
+                        this.apCalc.standardPressure / ((460 + this.apCalc.standardPressure) * this.convertkPaToPSI(this.apCalc.normalPressure))) / 100;
+                }
+                break;
+            case 'Flow Rate - Standard to Actual':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput * ((460 + this.apCalc.standardPressure) * this.apCalc.gasPressure) /
+                        ((460 + this.apCalc.gasTemperature) * this.apCalc.standardPressure)) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * (460 + this.apCalc.gasTemperature) * this.apCalc.standardPressure /
+                        ((460 + this.apCalc.standardPressure) * this.apCalc.gasPressure)) / 100;
+                }
+                break;
+            case 'Flow Rate - Normal to Actual':
+                if (changedIndex === 2) {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 1.699 * (460 + this.convertTemperature('°C', '°F', this.apCalc.normalTemperature)) *
+                        this.apCalc.standardPressure / ((460 + this.apCalc.standardPressure) * this.convertkPaToPSI(this.apCalc.normalPressure))) / 100;
+                } else {
+                    this.apResults[i].value1 = Math.round(100 * nInput * ((460 + this.apCalc.standardPressure) * this.convertkPaToPSI(this.apCalc.normalPressure)) /
+                        (1.699 * (460 + this.convertTemperature('°C', '°F', this.apCalc.normalTemperature)) * this.apCalc.standardPressure)) / 100;
+                }
+                break;
+            case 'Temperature':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = this.convertTemperature(this.apResults[i].uom2, this.apResults[i].uom1, nInput);
+                } else {
+                    this.apResults[i].value2 = this.convertTemperature(this.apResults[i].uom1, this.apResults[i].uom2, nInput);
+                }
+                break;
+            case 'Velocity (per second)':
+            case 'Velocity (per minute)':
+            case 'Pump Total Dynamic Head':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput * 3.28084) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 0.3048) / 100;
+                }
+                break;
+            case 'Velocity (per hour)':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput * 0.621371) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 1.60934) / 100;
+                }
+                break;
+            case 'Pressure':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = this.convertPressure(this.apResults[i].uom2, this.apResults[i].uom1, nInput);
+                } else {
+                    this.apResults[i].value2 = this.convertPressure(this.apResults[i].uom1, this.apResults[i].uom2, nInput);
+                }
+                break;
+            case 'Particulate Concentration':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput * 7000 / 60 * 1.699 * (460 +
+                        this.convertTemperature('°C', '°F', this.apCalc.normalTemperature)) / (460 + this.apCalc.standardPressure) / 453.59 / 1000) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput / 7000 * 60 / (1.699 * (460 +
+                        this.convertTemperature('°C', '°F', this.apCalc.normalTemperature)) / (460 + this.apCalc.standardPressure)) * 453.59 * 1000) / 100;
+                }
+                break;
+            case 'Mass Emission Rate':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput / 0.00012598) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 0.00012598) / 100;
+                }
+                break;
+            case 'Density':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput / 16.01846) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 16.01846) / 100;
+                }
+                break;
+            case 'Process Heat Input':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput / 0.000292875099) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 0.000292875099) / 100;
+                }
+                break;
+            case 'FF Bag Weight':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput / 0.0339058) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 0.0339058) / 100;
+                }
+                break;
+            case 'FF Bag Permeability':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput / 18.2862) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 18.2862) / 100;
+                }
+                break;
+            case 'Pump Capacity':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput / 0.227) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput * 0.227) / 100;
+                }
+                break;
+            case 'Thickness':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = this.convertThickness(nInput, false);
+                } else {
+                    this.apResults[i].value2 = this.convertThickness(nInput, true);
+                }
+                break;
+            case 'Weight':
+                if (changedIndex === 2) {
+                    this.apResults[i].value1 = Math.round(100 * nInput * 2.20462) / 100;
+                } else {
+                    this.apResults[i].value2 = Math.round(100 * nInput / 2.20462) / 100;
+                }
+                break;
+        }
+    } 
+  }
+
+  private convertTemperature(inUnit, outUnit, value) {
+    if (inUnit === '°F') {
+        if (outUnit === '°C') {
+            return Math.round(100 * (value - 32) * 5 / 9) / 100;
+        } else if (outUnit === 'K') {
+            return Math.round(100 * (value + 459.67) * 5 / 9) / 100;
+        } else {
+            return value;
+        }
+    } else if (inUnit === '°C') {
+        if (outUnit === '°F') {
+            return Math.round(100 * (value * 9 / 5 + 32)) / 100;
+        } else if (outUnit === 'K') {
+            return Math.round(100 * (value + 273.15)) / 100;
+        } else {
+            return value;
+        }
+    } else if (inUnit === 'K') {
+        if (outUnit === '°F') {
+            return Math.round(100 * (value * 9 / 5 - 459.67)) / 100;
+        } else if (outUnit === '°C') {
+            return Math.round(100 * (value - 273.15)) / 100;
+        } else {
+            return value;
+        }
+    } else {
+        return value;
+    }
+  } 
+
+  private convertPressure(inUnit, outUnit, value) {
+    if (inUnit === 'in wg') {
+        if (outUnit === 'mm Hg') {
+            return Math.round(value * 186.832015488) / 100;
+        } else if (outUnit === 'psia') {
+            return Math.round(100 * value / 27.7) / 100;
+        } else {
+            return value;
+        }
+    } else if (inUnit === 'psia') {
+        if (outUnit === 'in wg') {
+            return Math.round(value * 2770) / 100;
+        } else if (outUnit === 'mm Hg') {
+            return Math.round(value * 5171.49241024) / 100;
+        } else {
+            return value;
+        }
+    } else if (inUnit === 'mm Hg') {
+        if (outUnit === 'in wg') {
+            return Math.round(value * 53.52401714385129) / 100;
+        } else if (outUnit === 'psia') {
+            return Math.round(value * 1.93367778713) / 100;
+        } else {
+            return value;
+        }
+    } else if (inUnit === 'psi') {
+        if (outUnit === 'bars') {
+            return Math.round(value * 6.89475729) / 100;
+        } else {
+            return value;
+        }
+    } else if (inUnit === 'bars') {
+        if (outUnit === 'psi') {
+            return Math.round(value * 1450.37738) / 100;
+        } else if (outUnit === 'lb/ft\u00B2') {
+            return Math.round(value * 208854.34273) / 100;
+        } else {
+            return value;
+        }
+    } else if (inUnit === 'lb/ft\u00B2') {
+        if (outUnit === 'bars') {
+            return Math.round(value * 0.0478802588889) / 100;
+        } else {
+            return value;
+        }
+    } else {
+        return value;
+    }
+  }
+
+  private convertThickness(nThickness, bConvertToMetric) {
+    var gaugesToMM = [6.07, 5.69, 5.31, 4.94, 4.55, 4.18, 3.8, 3.42, 3.04, 2.66, 2.28, 1.9, 1.71, 1.52, 1.37, 1.21, 1.06, 0.91, 0.84, 0.76, 0.68, 0.61,
+        0.53, 0.45, 0.42, 0.38, 0.34, 0.3, 0.27, 0.25, 0.23, 0.21, 0.19, 0.17, 0.16, 0.15];
+
+    if (bConvertToMetric) {
+        if (nThickness > 38 || nThickness < 3) {
+            alert("Valid gauge must be between 3 and 38.");
+            return -1;
+        }
+    } else if (nThickness > 6.07 || nThickness < 0.15) {
+        alert("Thickness in mm must be between 0.15mm and 6.07mm in order to convert to gauge.")
+        return -1;
+    }
+
+    for (var i = 0; i < gaugesToMM.length; i++) {
+        if (bConvertToMetric) {
+            if (nThickness >= i + 3 && nThickness < i + 4) {
+                return gaugesToMM[i];
+            }
+        } else {
+            if (nThickness <= gaugesToMM[i] && (i + 1 === gaugesToMM.length || nThickness > gaugesToMM[i + 1])) {
+                return i + 3;
+            }
+        }
+    }
+  }
+
+  private convertkPaToPSI(value) {
+      return value * 0.145037738;
+  }
+
+  public clearAp() {
+    for (var i = 0; i < this.apResults.length; i++) {
+      this.apResults[i].value1 = 0;
+      this.apResults[i].value2 = 0;
+    }
+
+    this.convertPollutionValues(1);
+  }
 }

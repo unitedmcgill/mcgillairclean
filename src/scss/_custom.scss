@@ -380,3 +380,49 @@ input.molecular {
   float:left;
   width:80px;
 }
+
+table.nolines {
+    border: 0 solid white;
+    padding: 0 0 0 0;
+}
+
+table.pollute {
+    color:black;
+    margin:1px;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+thead.pollute {
+    background-color: #1171a3;
+    color: white;
+    text-align: center;
+}
+
+tbody.pollute {
+    background-color: white;
+}
+
+td.pollute {
+  border:1px solid white;
+  background-color: white;
+}
+
+td.pollute.right {
+  text-align: right;
+}
+
+td.pollute.left {
+  text-align: left;
+}
+
+th.pollute {
+  border:1px solid black;
+  background-color:#589CBF;
+  text-align: center;
+}
+
+input.pollute {
+  float:left;
+  width:80px;
+}
+

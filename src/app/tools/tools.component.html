@@ -354,6 +354,171 @@
         </tabset>
       </div>
     </tab>
+
+    <!--Velocity Duct Sizing Calculator-->
+    <tab heading="Velocity Duct Sizing">
+      <div class="card card-block card-outline-primary ">
+        <h5 class="card-title">Estimate what size duct is needed.</h5>
+        <br />
+        <form novalidate (ngSubmit)="calculateDuctSize()" #l="ngForm">
+          <div class="form-group row">
+            <label class="col-xs-4 col-form-label">Gas Flow (select)</label>
+            <div class="col-xs-3">
+              <input type="number" step="any" class="form-control" [(ngModel)]="ductSizing.gasFlow" name="gasFlow" #value="ngModel" (click)="$event.target.select()"/>
+            </div>
+            <div class="col-xs-2" *ngFor="let ductSizingType of ductFlowRateTypes">
+                <input type="radio" id="ductSizingType-input" [(ngModel)]="ductSizing.flowUOM" name="ductSizingType" [value]="ductSizingType.value" (ngModelChange)="calculateDuctSize()">{{ductSizingType.display}}
+            </div>
+          </div>
+          <div *ngIf="ductSizing.flowUOM=='SCFMd'" class="form-group row">
+            <label class="col-xs-4 col-form-label">Gas Temperature (°F)</label>
+            <div class="col-xs-3">
+              <input type="number" step="any" class="form-control" [(ngModel)]="ductSizing.gasTemperature" name="gasTemperature" #value="ngModel" (click)="$event.target.select()"/>
+            </div>
+          </div>
+          <div *ngIf="ductSizing.flowUOM=='SCFMd'" class="form-group row">
+            <label class="col-xs-4 col-form-label">% H<sub>2</sub>O (by volume)</label>
+            <div class="col-xs-3">
+              <input type="number" step="any" class="form-control" [(ngModel)]="ductSizing.percentH2O" name="percentH2O" #value="ngModel" percent (click)="$event.target.select()"/>
+              <div class="alert alert-danger" *ngIf="value.errors && (value.dirty || value.touched )">
+                <p *ngIf="value.errors.percent">
+                    Value must be a valid %
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xs-4 col-form-label">Gas Velocity (ft/min)</label>
+            <div class="col-xs-3">
+              <input type="number" min="0" step="any" class="form-control" [(ngModel)]="ductSizing.gasVelocity" name="gasVelocity" #value="ngModel" (click)="$event.target.select()"/>
+            </div>
+          </div>
+          <div *ngIf="ductSizing.flowUOM=='SCFMd'" class="form-group row">
+            <label class="col-xs-4 col-form-label">Gas Pressure (psia)</label>
+            <div class="col-xs-3">
+              <input type="number" step="any" class="form-control" [(ngModel)]="ductSizing.gasPressure" name="gasPressure" #value="ngModel" (click)="$event.target.select()"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <button [disabled]="l.invalid" type="submit" class="btn-space btn btn-success">Calculate</button> 
+          </div>
+          <div class="form-group row">
+            <label class="col-xs-4 col-form-label">Results: &nbsp;&nbsp;
+            </label>
+            <div class="col-xs-8">
+              <span>Duct Diameter: &nbsp; {{ductSizing.ductDiameterIn}} inches or {{ductSizing.ductDiameterFt}} feet</span><br />
+              <span>Duct Cross Sectional Area: &nbsp; {{ductSizing.ductCrossSectionalAreaSqIn}} sq.in. or {{ductSizing.ductCrossSectionalAreaSqFt}} sq.ft.</span><br />
+              <span *ngIf="ductSizing.flowUOM=='SCFMd'">Gas Flow: &nbsp; {{ductSizing.gasFlowActual}} ACFM</span><br />
+            </div>
+          </div>          
+        </form>
+      </div>
+    </tab>
+
+    <!--General Measurement Conversions-->
+    <tab heading="Conversions">
+      <div class="card card-block card-outline-primary ">
+        <h5 class="card-title">Convert general units of measure to English or metric.</h5>
+        <br />
+        <form novalidate #m="ngForm">
+          <div class="form-group row">
+            <label class="col-xs-4 col-form-label">Dimension</label>
+            <div class="col-xs-2" *ngFor="let dim of dimOptions">
+                <input type="radio" id="dim-input" [(ngModel)]="genConv.dimension" name="dim" [value]="dim" (ngModelChange)="updateUOMOptions()">{{dim.label}}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xs-4 col-form-label">Measurement</label>
+            <div class="col-xs-3">
+              <input type="number" step="any" min="0" class="form-control" [(ngModel)]="genConv.measurement" name="measurement" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="convertGeneralValues()"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xs-4 col-form-label">Unit of Measure</label>
+              <select [(ngModel)]="genConv.uom" (ngModelChange)="convertGeneralValues()" name="first">
+                <option *ngFor="let uom of results" [ngValue]="uom">{{uom.uom}}</option>
+              </select>
+          </div>
+          <div class="form-group row">
+            <label class="form-label col-xs-12">Results: &nbsp;&nbsp;
+            </label>
+            <div *ngFor="let out of results" class="col-xs-12">
+                <label class="form-label col-xs-4">&nbsp;</label>
+                <span class="form-label col-xs-8">{{out.value | number}} {{out.uom}}</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </tab>
+
+    <!--Air Pollution Control Measurements and Conversions-->
+     <tab heading="Pollution Control">
+      <div class="card card-block card-outline-primary ">
+        <h6 class="card-title">Convert commonly used units of measure used with air pollution control systems to English or metric.</h6>
+        <br />
+        <form novalidate #n="ngForm">
+          <!-- <div class="form-group row">
+            <label class="col-xs-4 form-label">Measuring (select)</label>
+              <div class="col-xs-3">
+              <select class="form-control" [(ngModel)]="apCalc.selectedMeasure" name="first">
+                <option *ngFor="let measure of measurementOptions" [ngValue]="measure">{{measure.label}}</option>
+              </select>
+              </div>
+          </div> -->
+          <div *ngIf="apCalc.selectedMeasure.key==0" class="form-group row">
+            <label class="col-xs-4 col-form-label">Standard Temperature (°F)</label>
+            <div class="col-xs-3">
+              <input type="number" step="any" min="0" class="form-control" [(ngModel)]="apCalc.standardTemperature" name="stdTemp" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="convertPollutionValues()"/>
+            </div>
+          </div>
+          <div *ngIf="apCalc.selectedMeasure.key==0" class="form-group row">
+            <label class="col-xs-4 col-form-label">Standard Pressure (psig)</label>
+            <div class="col-xs-3">
+              <input type="number" step="any" min="0" class="form-control" [(ngModel)]="apCalc.standardPressure" name="stdPress" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="convertPollutionValues()"/>
+            </div>
+          </div>
+          <div *ngIf="apCalc.selectedMeasure.key==0" class="form-group row">
+            <label class="col-xs-4 col-form-label">Normal Temperature (°F)</label>
+            <div class="col-xs-3">
+              <input type="number" step="any" min="0" class="form-control" [(ngModel)]="apCalc.normalTemperature" name="normalTemp" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="convertPollutionValues()"/>
+            </div>
+          </div>
+          <div *ngIf="apCalc.selectedMeasure.key==0" class="form-group row">
+            <label class="col-xs-4 col-form-label">Normal Pressure (psig)</label>
+            <div class="col-xs-3">
+              <input type="number" step="any" min="0" class="form-control" [(ngModel)]="apCalc.normalPressure" name="normalPress" #value="ngModel" (click)="$event.target.select()" (ngModelChange)="convertPollutionValues()"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="form-label col-xs-12">Results: &nbsp;&nbsp;
+            </label>
+              <table class="nolines pollute">
+                  <tr  class="pollute" *ngFor="let out of apResults; let i = index">
+                      <td class="pollute right">
+                          <label class="pollute">{{out.label}}</label>
+                      </td>
+                      <td class="pollute">
+                          <input type="number" [(ngModel)]="apResults[i].value1" (ngModelChange)="convertPollutionValues(1)" name="1{{i}}" (click)="$event.target.select()"/>
+                      </td>
+                      <td class="pollute left">
+                          <label class="unit">{{out.uom1}}</label>
+                      </td>
+                      <td class="pollute">
+                          <label class="unit">&nbsp;&nbsp;</label>
+                      </td>
+                      <td class="pollute">
+                          <input type="number" [(ngModel)]="apResults[i].value2" (ngModelChange)="convertPollutionValues(2)" name="2{{i}}" (click)="$event.target.select()"/>
+                      </td>
+                      <td class="pollute left">                        
+                          <label>{{out.uom2}}</label>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+        </form>
+      </div>
+    </tab> 
+
     <!--<tab *ngFor="let tabz of tabs"
          [heading]="tabz.title"
          [active]="tabz.active"
