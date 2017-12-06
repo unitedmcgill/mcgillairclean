@@ -38,27 +38,24 @@ export class ContactUsService{
                 //     })
     }
 
-    public sendMessage(contact : ContactUs){
-       
-        let bodyString = JSON.stringify(contact); // Stringify payload
-        let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-        let url = this.config.apiUrl+"/contactus";
-        //let options = new RequestOptions({ headers: headers, method: "post" }); // Create a request option
-        //.map((response:Response) => response.json())
-        // .map((res:Response) => {
-        //     console.log(res.json());
-        //     return res.json();})
-
-        this.http.post(url, bodyString, {headers:headers})
-        .map((res:Response) => res.json())      
-        .catch(this._handleError)
-        .subscribe(
-                data => console.log(data),
-                err => console.log(err)
-            );
-       
-        //alert(url + ":" + bodyString);
-    }
+    public sendMessage(contact : ContactUs) : Observable<ContactUs> {
+        
+         let bodyString = JSON.stringify(contact); // Stringify payload
+         let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+         let url = this.config.apiUrl+"/contactus";
+         //let options = new RequestOptions({ headers: headers, method: "post" }); // Create a request option
+         //.map((response:Response) => response.json())
+         // .map((res:Response) => {
+         //     console.log(res.json());
+         //     return res.json();})
+ 
+         return this.http.post(url, bodyString, {headers:headers})
+         .map((res:Response) => {return res;})      
+         .catch(this._handleError);
+        
+         //alert(url + ":" + bodyString);
+     }
+     
 
     private _handleError(error:any){
         console.error(error);

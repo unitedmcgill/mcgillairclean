@@ -34,7 +34,28 @@ export class ContactUsComponent implements OnInit {
     
     // Set the domain the request is coming from
     this.contact.forWebsiteDomain = "AirClean";
-    this.contactUsService.sendMessage(this.contact);
+    this.contactUsService.sendMessage(this.contact)
+    .subscribe((data: ContactUs) => {
+      if ( data ){
+        // console.log(data);
+        // console.log(this.ductConvert);
+        // const duct = JSON.stringify(data);
+        // Save was successfull so update the Copy
+        // this.application = Object.assign({}, this.application);
+        console.log(data);
+      } else {
+        console.log("error");
+      }
+    },
+    // On Error
+    (err:any) => {
+      console.log(err);
+      alert(err);
+    },
+    // Finally
+    () => {
+      alert("Message sent.");
+    });
 
     // Clear the form since we are doing *ngIf="active" on the form tag
     this.contact = new ContactUs();
