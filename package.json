@@ -38,6 +38,7 @@
   "devDependencies": {
     "@angular/cli": "^1.0.0-rc.4",
     "@angular/compiler-cli": "2.4.9",
+    "autotrack": "^2.4.1",
     "@types/jasmine": "2.5.45",
     "@types/node": "7.0.8",
     "codelyzer": "2.0.1",

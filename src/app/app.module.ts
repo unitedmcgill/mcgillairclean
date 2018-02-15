@@ -23,6 +23,7 @@ import { FullLayoutComponent }          from './layouts/full-layout.component';
 
 // My Components (Move to modules that need them...)
 import { ConfigService }                from "./services/config.service";
+import {AnalyticsService }              from "./services/analytics.service";
 
 // Init the config service
 export function initConfig(config: ConfigService){
@@ -49,6 +50,7 @@ export function initConfig(config: ConfigService){
     providers: [
         LoaderService,
         ConfigService,
+        AnalyticsService,
         {
             provide: APP_INITIALIZER,
             useFactory: initConfig,
