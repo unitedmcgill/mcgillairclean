@@ -8,7 +8,7 @@ import { Directive, HostListener } from '@angular/core';
 })
 export class NavDropdownDirective {
 
-    private _open = false;
+    public _open = false;
 
     /**
     * Checks if the dropdown menu is open or not.
