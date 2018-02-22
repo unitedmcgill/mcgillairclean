@@ -1,7 +1,7 @@
 import { NgModule }                 from '@angular/core';
 import { CommonModule }             from '@angular/common';
 import { FormsModule }              from '@angular/forms';
-import { TabsModule }               from 'ng2-bootstrap/tabs';
+import { TabsModule }               from 'ngx-bootstrap/tabs';
 
 import { FfComponent }       from './ff.component';
 import { FfRoutingModule }   from './ff-routing.module';

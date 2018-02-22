@@ -138,12 +138,12 @@ Then copy the contents of dist to wwwroot on the IIS machine *Exclude app.config
 dev and prod.  Done.
 
 -----------------------
-Bootstrap ng2-bootstrap
+Bootstrap ngx-bootstrap
 -----------------------
-npm install ng2-bootstrap bootstrap --save
+npm install ngx-bootstrap bootstrap --save
 
 open src/app/app.module.ts and add
-import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { AlertModule } from 'ngx-bootstrap/ngx-bootstrap';
 ...
 
 @NgModule({
