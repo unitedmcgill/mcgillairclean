@@ -35,6 +35,10 @@ export const routes: Routes = [
                 loadChildren: './ff/ff.module#FfModule'
             },
             {
+                path: 'catfilters',
+                loadChildren: './catfilters/catfilters.module#CatFiltersModule'
+            },
+            {
                 path: 'incinerators',
                 loadChildren: './incinerators/incinerators.module#IncineratorsModule'
             },
