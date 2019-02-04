@@ -1,8 +1,11 @@
+
+import {throwError as observableThrowError, Observable} from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import  { Http, Response, Headers, RequestOptions } from '@angular/http';
+import {HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from "../services/config.service";
 import { ContactUs } from '../models/contact-us'
-import {Observable} from 'rxjs/Rx';
 import { Values } from '../models/values';
 
 @Injectable()
@@ -10,7 +13,7 @@ export class ContactUsService{
 
     private config : any;
 
-    constructor(private configService: ConfigService, private http: Http){
+    constructor(private configService: ConfigService, private http: HttpClient){
         this.config = configService.config;
     }
 
@@ -28,9 +31,8 @@ export class ContactUsService{
         //     }
         // })
         let url = this.config.apiUrl+"/values";
-        return this.http.get(url)
-                   .map((res:Response)=>res.json())
-                   .catch((error:any)=>Observable.throw(error.json().error||'Server error'));
+        return this.http.get<Values[]>(url).pipe(
+                   catchError((error:any)=>observableThrowError(error.json().error||'Server error')));
 
                 //    .map(data => {
                 //      userData = data;
@@ -41,7 +43,7 @@ export class ContactUsService{
     public sendMessage(contact : ContactUs) : Observable<ContactUs> {
         
          let bodyString = JSON.stringify(contact); // Stringify payload
-         let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+         let headers = new HttpHeaders({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
          let url = this.config.apiUrl+"/contactus";
          //let options = new RequestOptions({ headers: headers, method: "post" }); // Create a request option
          //.map((response:Response) => response.json())
@@ -49,9 +51,8 @@ export class ContactUsService{
          //     console.log(res.json());
          //     return res.json();})
  
-         return this.http.post(url, bodyString, {headers:headers})
-         .map((res:Response) => {return res;})      
-         .catch(this._handleError);
+         return this.http.post<ContactUs>(url, bodyString, {headers:headers}).pipe(
+         catchError(this._handleError));
         
          //alert(url + ":" + bodyString);
      }
@@ -59,12 +60,7 @@ export class ContactUsService{
 
     private _handleError(error:any){
         console.error(error);
-        return Observable.throw(error.json().error || ' error');
+        return observableThrowError(error.message || ' error');
     }
-
-    private extractData(res: Response) {
-        let body = res.json();
-        return body.data || { };
-    } 
 
 }
