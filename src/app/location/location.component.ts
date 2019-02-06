@@ -7,7 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LocationComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    this.showEmailAddress = false;
+    this.salesEmail = "sales@mcgillairclean.com";
+    this.engineeringEmail = "engineering@mcgillairclean.com";
+    this.serviceEmail = "service@mcgillairclean.com";
+  }
+
+  salesEmail : string;
+  serviceEmail : string;
+  engineeringEmail : string;
+  showEmailAddress : boolean;
 
   public tabs:Array<any> = [
     {title: 'Dynamic Title 1', content: 'Dynamic content 1'},
@@ -16,6 +26,10 @@ export class LocationComponent implements OnInit {
     {title: 'Dynamic Title 4', content: 'Dynamic content 4', customClass: 'customClass'}
   ];
  
+  public showEmail() {
+    this.showEmailAddress = true;
+  };
+
   public alertMe():void {
     setTimeout(function ():void {
       alert('You\'ve selected the alert tab!');

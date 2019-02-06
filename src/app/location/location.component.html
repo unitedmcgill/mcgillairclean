@@ -7,15 +7,17 @@
 					<br />
 					<b>McGill AirClean <small><b>LLC</b></small></b>
 					<hr> 1777 Refugee Rd.<br /> Columbus, OH 43207<br /> 614/829-1200
-					<br /> Fax: 614/445-8759<br /> sales@mcgillairclean.com
-					<br />
+					<br /> Fax: 614/445-8759<br />
+					<button *ngIf="!showEmailAddress" (click)="showEmail()">Click to see email</button>
+          <p *ngIf="showEmailAddress">{{salesEmail}}</p>
 				</div>
 				<div class="card-text">
 					<br />
 					<b>McGill AirClean Plant</b>
 					<hr> 1779 Refugee Rd.<br /> Columbus, OH 43207<br /> 614/829-1200
-					<br /> Fax: 614/829-1319<br /> engineering@mcgillairclean.com
-					<br /> service@mcgillairclean.com
+					<br /> Fax: 614/829-1319<br /> 
+					<button *ngIf="!showEmailAddress" (click)="showEmail()">Click to see email</button>
+          <p *ngIf="showEmailAddress">{{engineeringEmail}}<br />{{serviceEmail}}</p>
 					<br />
 				</div>
 			</div>
