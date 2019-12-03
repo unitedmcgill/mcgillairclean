@@ -143,6 +143,10 @@ export const routes: Routes = [
                 loadChildren: './aboutus/aboutus.module#AboutUsModule'
             },
             {
+                path: 'greeting',
+                loadChildren: './greeting/greeting.module#GreetingModule'
+            },
+            {
                 path: 'contactus',
                 loadChildren: './contactus/contactus.module#ContactUsModule'
             }
