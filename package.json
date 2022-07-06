@@ -29,7 +29,7 @@
     "@angular/upgrade": "^7.2.3",
     "chart.js": "2.5.0",
     "core-js": "2.4.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-bootstrap": "^2.0.5",
     "rxjs": "^6.4.0",
     "ts-helpers": "1.1.2",
